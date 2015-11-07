@@ -75,7 +75,7 @@ local return_code="%(?..%{$PR_RED%}%? ↵%{$PR_NO_COLOR%})"
 local user_host='${PR_USER}${PR_CYAN}@${PR_HOST}'
 local current_dir='%{$PR_BOLD$PR_BLUE%}%~%{$PR_NO_COLOR%}'
 
-if [[ $(tty) == *pts* ]]; then
+if [[ ($(tty) == *pts* || "$PLATFORM" == 'macosx') ]]; then
     export TERM="xterm-256color" # 256-colour terminal
     if [[ ! -z $TMUX ]]; then
         export TERM="screen-256color"

@@ -1,13 +1,7 @@
 #!/bin/zsh
 # vim: set filetype=zsh
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   platform='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   platform='macosx'
-fi
 
+echo $PLATFORM
 
 alias -s {avi,mpeg,mpg,mov,m2v}=smplayer
 alias -s {odt,doc,sxw,rtf}=openoffice.org
@@ -22,7 +16,7 @@ alias -s {txt,py,ini,yaml,pid,conf,cnf,config}=vim
 
 autoload -U pick-web-browser
 alias -s {html,htm,xhtml}=pick-web-browser
-if [[ $platform == 'macosx' ]]; then
+if [[ $PLATFORM == 'macosx' ]]; then
 	grc_path='/usr/local/bin/grc'
 else
         grc_path='/usr/bin/grc'
@@ -41,12 +35,13 @@ if [ -f $grc_path ]; then
     alias head="grc head" 
     alias git="grc git"
 fi
+unset grc_path
 
 if which rsync >/dev/null; then
     alias rcp='rsync -aP'
 fi
 
-if [[ $platform == 'linux' ]]; then
+if [[ $PLATFORM == 'linux' ]]; then
 	alias ls='ls --classify --color --human-readable --group-directories-first'
 	alias cp='nocorrect cp --interactive --verbose --recursive --preserve=all'
 	alias mv='nocorrect mv --verbose --interactive'
@@ -72,7 +67,7 @@ if [[ $platform == 'linux' ]]; then
 	alias ex="exit"
 	alias i="grep"
 	alias less='zless'
-elif [[ $platform == 'macosx' ]]; then
+elif [[ $PLATFORM == 'macosx' ]]; then
         alias ls='gls --classify --color --human-readable --group-directories-first'
         alias cp='nocorrect gcp --interactive --verbose --recursive --preserve=all'
         alias mv='nocorrect gmv --verbose --interactive'
@@ -97,19 +92,20 @@ elif [[ $platform == 'macosx' ]]; then
         alias ex="exit"
         alias i="grep"
         alias less='zless'
-
+fi
 
 # Inline aliases, zsh -g aliases can be anywhere in command line
 alias -g G='| grep -e'
 alias -g L='| zless'
 alias -g clean='egrep -v "^\s*$|^;|^\s*#"'
 
-alias upgrade='sudo apt-get update && sudo apt-get upgrade'
-alias pkgsearch='apt-cache search'
-alias pkginfo='dpkg -s'
-alias pkginst='dpkg --get-selections | grep'
-alias pkgremove='sudo apt-get remove'
-alias pkgpurge='sudo apt-get purge'
-alias pkgclean='sudo apt-get autoclean'
-
+if [[ $PLATFORM == 'linux' ]]; then
+	alias upgrade='sudo apt-get update && sudo apt-get upgrade'
+	alias pkgsearch='apt-cache search'
+	alias pkginfo='dpkg -s'
+	alias pkginst='dpkg --get-selections | grep'
+	alias pkgremove='sudo apt-get remove'
+	alias pkgpurge='sudo apt-get purge'
+	alias pkgclean='sudo apt-get autoclean'
+fi
 alias tmux="tmux_run"
