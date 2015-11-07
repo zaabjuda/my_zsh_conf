@@ -1,5 +1,13 @@
 #!/bin/zsh
 # vim: set filetype=zsh
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   platform='macosx'
+fi
+
 
 alias -s {avi,mpeg,mpg,mov,m2v}=smplayer
 alias -s {odt,doc,sxw,rtf}=openoffice.org
@@ -14,8 +22,12 @@ alias -s {txt,py,ini,yaml,pid,conf,cnf,config}=vim
 
 autoload -U pick-web-browser
 alias -s {html,htm,xhtml}=pick-web-browser
-
-if [ -f /usr/bin/grc ]; then
+if [[ $platform == 'macosx' ]]; then
+	grc_path='/usr/local/bin/grc'
+else
+        grc_path='/usr/bin/grc'
+fi
+if [ -f $grc_path ]; then
     alias grc='grc --colour=auto'
     alias ping='grc ping'
     alias last='grc last'
@@ -34,32 +46,58 @@ if which rsync >/dev/null; then
     alias rcp='rsync -aP'
 fi
 
+if [[ $platform == 'linux' ]]; then
+	alias ls='ls --classify --color --human-readable --group-directories-first'
+	alias cp='nocorrect cp --interactive --verbose --recursive --preserve=all'
+	alias mv='nocorrect mv --verbose --interactive'
+	alias rm='nocorrect rm -Irv'
+	alias sudo='nocorrect sudo'
+	alias du='du --human-readable --total'
+	alias df='df --human-readable'
+	alias nohup='nohup > /dev/null $1'
+	alias s='nocorrect sudo'
+	alias v='vim'
+	alias sv='sudo vim'
+	alias sk='sudo killall'
+	alias rm='rm -v'
+	alias mv='mv -v'
+	alias k='killall' 
+	alias killall="killall --interactive --verbose"
+	alias free="free -t -m"
+	alias git="nocorrect git"
+	alias scrot="scrot --border --count --quality 75 $HOME'/%d-%b-%y_%H-%M-%S_\$wx\$h.png' --exec 'du -h \$f'"
+	alias aptitude="sudo aptitude"
+	alias ifconfig="sudo ifconfig"
+	alias logo="exit"
+	alias ex="exit"
+	alias i="grep"
+	alias less='zless'
+elif [[ $platform == 'macosx' ]]; then
+        alias ls='gls --classify --color --human-readable --group-directories-first'
+        alias cp='nocorrect gcp --interactive --verbose --recursive --preserve=all'
+        alias mv='nocorrect gmv --verbose --interactive'
+        alias rm='nocorrect grm -Irv'
+        alias sudo='nocorrect sudo'
+        alias du='gdu --human-readable --total'
+        alias df='gdf --human-readable'
+        alias nohup='nohup > /dev/null $1'
+        alias s='nocorrect sudo'
+        alias v='vim'
+        alias sv='sudo vim'
+        alias sk='sudo killall'
+        alias rm='grm -v'
+        alias mv='gmv -v'
+        alias k='killall'
+        alias killall="killall -v"
+        #alias free="free -t -m"
+        alias git="nocorrect git"
+        alias scrot="scrot --border --count --quality 75 $HOME'/%d-%b-%y_%H-%M-%S_\$wx\$h.png' --exec 'du -h \$f'"
+        alias ifconfig="sudo ifconfig"
+        alias logo="exit"
+        alias ex="exit"
+        alias i="grep"
+        alias less='zless'
 
-alias ls='ls --classify --color --human-readable --group-directories-first'
-alias cp='nocorrect cp --interactive --verbose --recursive --preserve=all'
-alias mv='nocorrect mv --verbose --interactive'
-alias rm='nocorrect rm -Irv'
-alias sudo='nocorrect sudo'
-alias du='du --human-readable --total'
-alias df='df --human-readable'
-alias nohup='nohup > /dev/null $1'
-alias s='nocorrect sudo'
-alias v='vim'
-alias sv='sudo vim'
-alias sk='sudo killall'
-alias rm='rm -v'
-alias mv='mv -v'
-alias k='killall' 
-alias killall="killall --interactive --verbose"
-alias free="free -t -m"
-alias git="nocorrect git"
-alias scrot="scrot --border --count --quality 75 $HOME'/%d-%b-%y_%H-%M-%S_\$wx\$h.png' --exec 'du -h \$f'"
-alias aptitude="sudo aptitude"
-alias ifconfig="sudo ifconfig"
-alias logo="exit"
-alias ex="exit"
-alias i="grep"
-alias less='zless'
 
 # Inline aliases, zsh -g aliases can be anywhere in command line
 alias -g G='| grep -e'
