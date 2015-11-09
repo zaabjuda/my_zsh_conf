@@ -13,6 +13,14 @@ export PROJECT_HOME=$HOME/Development
 source /usr/local/bin/virtualenvwrapper.sh
 
 
+SEGMENT_SEPARATOR="\ue0b0"
+PLUSMINUS="\u00b1"
+BRANCH="\ue0a0"
+DETACHED="\u27a6"
+CROSS="\u2718"
+LIGHTNING="\u26a1"
+GEAR="\u2699"
+
 # Fish-like term highlighing
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
