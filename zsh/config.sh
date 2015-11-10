@@ -29,7 +29,7 @@ ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 export BC_ENV_ARGS="--quiet --mathlib"
 
 # Enable color in grep
-export GREP_OPTIONS='--color=auto'
+#export GREP_OPTIONS='--color=auto'
 #export GREP_COLOR='3;33'
 
 export HISTTIMEFORMAT="%t%d.%m.%y %H:%M:%S%t"

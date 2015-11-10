@@ -1,6 +1,8 @@
 #!/bin/zsh
 # vim: set filetype=zsh
 
+alias grep='grep --color=auto'
+
 alias -s {avi,mpeg,mpg,mov,m2v}=smplayer
 alias -s {odt,doc,sxw,rtf}=openoffice.org
 alias -s {pdf,djvu}=evince
